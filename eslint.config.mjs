@@ -2,6 +2,7 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import prettier from 'eslint-plugin-prettier';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -14,6 +15,8 @@ export default [
       'prefer-const': 'error',
       'no-console': 'warn',
       'no-undef': 'error',
+      ...prettier.configs.recommended.rules,
+      'prettier/prettier': 'error',
     },
     ignores: ['.node_modules/*', '.dist/*'],
   },
