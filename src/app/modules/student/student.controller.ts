@@ -1,11 +1,22 @@
 import { Request, Response } from 'express';
 import { StudentServices } from './student.service';
+import studentValidationSchema from './student.validation';
 
 const createStudent = async (req: Request, res: Response) => {
   try {
     const { student: studentData } = req.body;
 
-    const result = await StudentServices.createStudentIntoDB(studentData);
+    const { error, value } = studentValidationSchema.validate(studentData);
+
+    if (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Internal Server Error',
+        error: error.details,
+      });
+    }
+
+    const result = await StudentServices.createStudentIntoDB(value);
 
     res.status(200).json({
       success: true,
