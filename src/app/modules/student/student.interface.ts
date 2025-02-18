@@ -5,6 +5,11 @@ export type UserName = {
   lastName: string;
 };
 
+export type Address = {
+  permanent: string;
+  current: string;
+};
+
 export type Guardian = {
   fatherName: string;
   fatherOccupation: string;
@@ -30,10 +35,7 @@ export type Student = {
   contactNo: string;
   emergencyContactNo: string;
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
-  address: {
-    permanent: string;
-    current: string;
-  };
+  address: Address;
   guardian: Guardian;
   localGuardian?: LocalGuardian;
   profileImage?: string;
