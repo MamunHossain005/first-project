@@ -1,22 +1,27 @@
 import { Request, Response } from 'express';
 import { StudentServices } from './student.service';
-import studentValidationSchema from './student.validation';
+// import studentValidationSchema from './student.validation';
+import studentValidationSchema from './student.zod.validation';
 
 const createStudent = async (req: Request, res: Response) => {
   try {
     const { student: studentData } = req.body;
 
-    const { error, value } = studentValidationSchema.validate(studentData);
+    //data validation using Joi
+    // const { error, value } = studentValidationSchema.validate(studentData);
 
-    if (error) {
-      res.status(500).json({
-        success: false,
-        message: 'Internal Server Error',
-        error: error.details,
-      });
-    }
+    //data validation using zod
+    const zodParsedData = studentValidationSchema.parse(studentData);
 
-    const result = await StudentServices.createStudentIntoDB(value);
+    // if (error) {
+    //   res.status(500).json({
+    //     success: false,
+    //     message: 'Internal Server Error',
+    //     error: error.details,
+    //   });
+    // }
+
+    const result = await StudentServices.createStudentIntoDB(zodParsedData);
 
     res.status(200).json({
       success: true,
