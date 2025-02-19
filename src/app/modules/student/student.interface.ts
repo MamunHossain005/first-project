@@ -1,16 +1,18 @@
-// Type definitions for Student Module
-export type UserName = {
+import { Model } from 'mongoose';
+
+// Type definitions for TStudent Module
+export type TUserName = {
   firstName: string;
   middleName?: string;
   lastName: string;
 };
 
-export type Address = {
+export type TAddress = {
   permanent: string;
   current: string;
 };
 
-export type Guardian = {
+export type TGuardian = {
   fatherName: string;
   fatherOccupation: string;
   fatherContactNo: string;
@@ -19,25 +21,31 @@ export type Guardian = {
   motherContactNo: string;
 };
 
-export type LocalGuardian = {
+export type TLocalGuardian = {
   name: string;
   occupation: string;
   contactNo: string;
   address: string;
 };
 
-export type Student = {
+export type TStudent = {
   id: string;
-  name: UserName;
+  name: TUserName;
   gender: 'male' | 'female' | 'other';
   dateOfBirth?: string;
   email: string;
   contactNo: string;
   emergencyContactNo: string;
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
-  address: Address;
-  guardian: Guardian;
-  localGuardian?: LocalGuardian;
+  address: TAddress;
+  guardian: TGuardian;
+  localGuardian?: TLocalGuardian;
   profileImage?: string;
   isActive: 'active' | 'blocked';
 };
+
+export type StudentMethods = {
+  isUserExist(id: string): Promise<TStudent | null>;
+};
+
+export type StudentModel = Model<TStudent, object, StudentMethods>;
