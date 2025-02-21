@@ -75,8 +75,29 @@ const getSingleStudent = async (req: Request, res: Response) => {
   }
 };
 
+const deleteSingleStudent = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const result = await StudentServices.deleteSingleStudentFromDB(id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Student has deleted successfully',
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'Student has not deleted',
+      error: err,
+    });
+  }
+};
+
 export const StudentController = {
   createStudent,
   getAllStudents,
   getSingleStudent,
+  deleteSingleStudent,
 };
